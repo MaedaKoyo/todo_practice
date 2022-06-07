@@ -1,0 +1,134 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type List {
+  id: ID!
+  title: String!
+  deadline: String!
+  done: Boolean!
+}
+
+type Query {
+  readFirst(where: ListWhereInput, orderBy: [ListOrderByWithRelationInput!], cursor: ListWhereUniqueInput, take: Int, skip: Int, distinct: [ListScalarFieldEnum!]): List!
+  readAll(where: ListWhereInput, orderBy: [ListOrderByWithRelationInput!], cursor: ListWhereUniqueInput, take: Int, skip: Int, distinct: [ListScalarFieldEnum!]): [List!]!
+}
+
+input ListWhereInput {
+  AND: [ListWhereInput!]
+  OR: [ListWhereInput!]
+  NOT: [ListWhereInput!]
+  id: IntFilter
+  title: StringFilter
+  deadline: StringFilter
+  done: BoolFilter
+}
+
+input IntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntFilter
+}
+
+input NestedIntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntFilter
+}
+
+input StringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringFilter
+}
+
+input NestedStringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringFilter
+}
+
+input BoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+input NestedBoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+input ListOrderByWithRelationInput {
+  id: SortOrder
+  title: SortOrder
+  deadline: SortOrder
+  done: SortOrder
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+input ListWhereUniqueInput {
+  id: Int
+}
+
+enum ListScalarFieldEnum {
+  id
+  title
+  deadline
+  done
+}
+
+type Mutation {
+  createList(data: ListCreateInput!): List!
+  updateList(data: ListUpdateInput!, where: ListWhereUniqueInput!): List!
+  deleteList(where: ListWhereUniqueInput!): List!
+}
+
+input ListCreateInput {
+  title: String!
+  deadline: String!
+  done: Boolean
+}
+
+input ListUpdateInput {
+  title: StringFieldUpdateOperationsInput
+  deadline: StringFieldUpdateOperationsInput
+  done: BoolFieldUpdateOperationsInput
+}
+
+input StringFieldUpdateOperationsInput {
+  set: String
+}
+
+input BoolFieldUpdateOperationsInput {
+  set: Boolean
+}
