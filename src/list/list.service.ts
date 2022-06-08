@@ -13,12 +13,12 @@ import {DeleteOneListArgs} from 'src/@generated/prisma-nestjs-graphql/list/delet
 export class ListService {
     constructor(private readonly prisma: PrismaService) {}
 
-    //一番上だけ取る
-    async findFirst(args: FindFirstListArgs): Promise<List | null> {
+    //1件取得
+    async findOne(args: FindFirstListArgs): Promise<List | null> {
         return this.prisma.list.findFirst(args)
     }
 
-    //全件取得
+    //複数件取得
     async findMany(args: FindManyListArgs): Promise<List[] | null>{
         return this.prisma.list.findMany(args);
     }

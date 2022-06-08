@@ -23,7 +23,7 @@ type List {
 }
 
 type Query {
-  readFirst(where: ListWhereInput, orderBy: [ListOrderByWithRelationInput!], cursor: ListWhereUniqueInput, take: Int, skip: Int, distinct: [ListScalarFieldEnum!]): List!
+  readOne(where: ListWhereInput, orderBy: [ListOrderByWithRelationInput!], cursor: ListWhereUniqueInput, take: Int, skip: Int, distinct: [ListScalarFieldEnum!]): List!
   readAll(where: ListWhereInput, orderBy: [ListOrderByWithRelationInput!], cursor: ListWhereUniqueInput, take: Int, skip: Int, distinct: [ListScalarFieldEnum!]): [List!]!
 }
 

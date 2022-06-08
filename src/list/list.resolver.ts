@@ -14,16 +14,16 @@ export class ListResolver {
     constructor(private readonly listService: ListService) {}
     
 
-    //上の一件だけ
+    //1件取得
     @Query(() => List)
-    readFirst(
+    readOne(
         @Args() args: FindFirstListArgs
     ){
-        return this.listService.findFirst(args)
+        return this.listService.findOne(args)
     }
 
 
-    //全件取得
+    //複数件取得
     @Query(() => [List])
     readAll(
         @Args() args: FindManyListArgs
