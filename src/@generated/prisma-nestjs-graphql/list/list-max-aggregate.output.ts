@@ -16,4 +16,7 @@ export class ListMaxAggregate {
 
     @Field(() => Boolean, {nullable:true})
     done?: boolean;
+
+    @Field(() => Int, {nullable:true})
+    user_id?: number;
 }

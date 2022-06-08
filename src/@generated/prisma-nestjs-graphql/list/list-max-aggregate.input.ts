@@ -15,4 +15,7 @@ export class ListMaxAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
     done?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    user_id?: true;
 }
