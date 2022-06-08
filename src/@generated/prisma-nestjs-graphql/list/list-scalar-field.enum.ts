@@ -4,7 +4,8 @@ export enum ListScalarFieldEnum {
     id = "id",
     title = "title",
     deadline = "deadline",
-    done = "done"
+    done = "done",
+    user_id = "user_id"
 }
 
 

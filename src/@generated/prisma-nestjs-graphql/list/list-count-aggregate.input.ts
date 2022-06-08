@@ -17,5 +17,8 @@ export class ListCountAggregateInput {
     done?: true;
 
     @Field(() => Boolean, {nullable:true})
+    user_id?: true;
+
+    @Field(() => Boolean, {nullable:true})
     _all?: true;
 }

@@ -18,5 +18,8 @@ export class ListCountAggregate {
     done!: number;
 
     @Field(() => Int, {nullable:false})
+    user_id!: number;
+
+    @Field(() => Int, {nullable:false})
     _all!: number;
 }

@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaService } from './prisma.service';
 import { ListModule } from './list/list.module';
+import { UsersModule } from './users/users.module';
 
 
 @Module({
@@ -14,6 +15,7 @@ import { ListModule } from './list/list.module';
       autoSchemaFile: 'schema.graphql',
     }),
     ListModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService]

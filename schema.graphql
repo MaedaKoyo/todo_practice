@@ -2,11 +2,24 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type UsersCount {
+  list: Int!
+}
+
+type Users {
+  id: ID!
+  name: String!
+  list: [List!]
+  _count: UsersCount!
+}
+
 type List {
   id: ID!
   title: String!
   deadline: String!
   done: Boolean!
+  user: Users
+  user_id: Int
 }
 
 type Query {
@@ -22,6 +35,8 @@ input ListWhereInput {
   title: StringFilter
   deadline: StringFilter
   done: BoolFilter
+  user: UsersRelationFilter
+  user_id: IntNullableFilter
 }
 
 input IntFilter {
@@ -84,16 +99,70 @@ input NestedBoolFilter {
   not: NestedBoolFilter
 }
 
+input UsersRelationFilter {
+  is: UsersWhereInput
+  isNot: UsersWhereInput
+}
+
+input UsersWhereInput {
+  AND: [UsersWhereInput!]
+  OR: [UsersWhereInput!]
+  NOT: [UsersWhereInput!]
+  id: IntFilter
+  name: StringFilter
+  list: ListListRelationFilter
+}
+
+input ListListRelationFilter {
+  every: ListWhereInput
+  some: ListWhereInput
+  none: ListWhereInput
+}
+
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntNullableFilter
+}
+
+input NestedIntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntNullableFilter
+}
+
 input ListOrderByWithRelationInput {
   id: SortOrder
   title: SortOrder
   deadline: SortOrder
   done: SortOrder
+  user: UsersOrderByWithRelationInput
+  user_id: SortOrder
 }
 
 enum SortOrder {
   asc
   desc
+}
+
+input UsersOrderByWithRelationInput {
+  id: SortOrder
+  name: SortOrder
+  list: ListOrderByRelationAggregateInput
+}
+
+input ListOrderByRelationAggregateInput {
+  _count: SortOrder
 }
 
 input ListWhereUniqueInput {
@@ -105,24 +174,49 @@ enum ListScalarFieldEnum {
   title
   deadline
   done
+  user_id
 }
 
 type Mutation {
   createList(data: ListCreateInput!): List!
   updateList(data: ListUpdateInput!, where: ListWhereUniqueInput!): List!
   deleteList(where: ListWhereUniqueInput!): List!
+  createUser(data: UsersCreateInput!): Users!
+  deleteUser(where: UsersWhereUniqueInput!): Users!
+  updateUser(data: UsersUpdateInput!, where: UsersWhereUniqueInput!): Users!
 }
 
 input ListCreateInput {
   title: String!
   deadline: String!
   done: Boolean
+  user: UsersCreateNestedOneWithoutListInput
+}
+
+input UsersCreateNestedOneWithoutListInput {
+  create: UsersCreateWithoutListInput
+  connectOrCreate: UsersCreateOrConnectWithoutListInput
+  connect: UsersWhereUniqueInput
+}
+
+input UsersCreateWithoutListInput {
+  name: String!
+}
+
+input UsersCreateOrConnectWithoutListInput {
+  where: UsersWhereUniqueInput!
+  create: UsersCreateWithoutListInput!
+}
+
+input UsersWhereUniqueInput {
+  id: Int
 }
 
 input ListUpdateInput {
   title: StringFieldUpdateOperationsInput
   deadline: StringFieldUpdateOperationsInput
   done: BoolFieldUpdateOperationsInput
+  user: UsersUpdateOneWithoutListInput
 }
 
 input StringFieldUpdateOperationsInput {
@@ -131,4 +225,102 @@ input StringFieldUpdateOperationsInput {
 
 input BoolFieldUpdateOperationsInput {
   set: Boolean
+}
+
+input UsersUpdateOneWithoutListInput {
+  create: UsersCreateWithoutListInput
+  connectOrCreate: UsersCreateOrConnectWithoutListInput
+  upsert: UsersUpsertWithoutListInput
+  disconnect: Boolean
+  delete: Boolean
+  connect: UsersWhereUniqueInput
+  update: UsersUpdateWithoutListInput
+}
+
+input UsersUpsertWithoutListInput {
+  update: UsersUpdateWithoutListInput!
+  create: UsersCreateWithoutListInput!
+}
+
+input UsersUpdateWithoutListInput {
+  name: StringFieldUpdateOperationsInput
+}
+
+input UsersCreateInput {
+  name: String!
+  list: ListCreateNestedManyWithoutUserInput
+}
+
+input ListCreateNestedManyWithoutUserInput {
+  create: [ListCreateWithoutUserInput!]
+  connectOrCreate: [ListCreateOrConnectWithoutUserInput!]
+  connect: [ListWhereUniqueInput!]
+}
+
+input ListCreateWithoutUserInput {
+  title: String!
+  deadline: String!
+  done: Boolean
+}
+
+input ListCreateOrConnectWithoutUserInput {
+  where: ListWhereUniqueInput!
+  create: ListCreateWithoutUserInput!
+}
+
+input UsersUpdateInput {
+  name: StringFieldUpdateOperationsInput
+  list: ListUpdateManyWithoutUserInput
+}
+
+input ListUpdateManyWithoutUserInput {
+  create: [ListCreateWithoutUserInput!]
+  connectOrCreate: [ListCreateOrConnectWithoutUserInput!]
+  upsert: [ListUpsertWithWhereUniqueWithoutUserInput!]
+  set: [ListWhereUniqueInput!]
+  disconnect: [ListWhereUniqueInput!]
+  delete: [ListWhereUniqueInput!]
+  connect: [ListWhereUniqueInput!]
+  update: [ListUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [ListUpdateManyWithWhereWithoutUserInput!]
+  deleteMany: [ListScalarWhereInput!]
+}
+
+input ListUpsertWithWhereUniqueWithoutUserInput {
+  where: ListWhereUniqueInput!
+  update: ListUpdateWithoutUserInput!
+  create: ListCreateWithoutUserInput!
+}
+
+input ListUpdateWithoutUserInput {
+  title: StringFieldUpdateOperationsInput
+  deadline: StringFieldUpdateOperationsInput
+  done: BoolFieldUpdateOperationsInput
+}
+
+input ListUpdateWithWhereUniqueWithoutUserInput {
+  where: ListWhereUniqueInput!
+  data: ListUpdateWithoutUserInput!
+}
+
+input ListUpdateManyWithWhereWithoutUserInput {
+  where: ListScalarWhereInput!
+  data: ListUpdateManyMutationInput!
+}
+
+input ListScalarWhereInput {
+  AND: [ListScalarWhereInput!]
+  OR: [ListScalarWhereInput!]
+  NOT: [ListScalarWhereInput!]
+  id: IntFilter
+  title: StringFilter
+  deadline: StringFilter
+  done: BoolFilter
+  user_id: IntNullableFilter
+}
+
+input ListUpdateManyMutationInput {
+  title: StringFieldUpdateOperationsInput
+  deadline: StringFieldUpdateOperationsInput
+  done: BoolFieldUpdateOperationsInput
 }

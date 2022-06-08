@@ -22,6 +22,9 @@ export class ListGroupBy {
     @Field(() => Boolean, {nullable:false})
     done!: boolean;
 
+    @Field(() => Int, {nullable:true})
+    user_id?: number;
+
     @Field(() => ListCountAggregate, {nullable:true})
     _count?: ListCountAggregate;
 
