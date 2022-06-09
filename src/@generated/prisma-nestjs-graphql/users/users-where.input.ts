@@ -20,7 +20,13 @@ export class UsersWhereInput {
     id?: IntFilter;
 
     @Field(() => StringFilter, {nullable:true})
+    email?: StringFilter;
+
+    @Field(() => StringFilter, {nullable:true})
     name?: StringFilter;
+
+    @Field(() => StringFilter, {nullable:true})
+    password?: StringFilter;
 
     @Field(() => ListListRelationFilter, {nullable:true})
     list?: ListListRelationFilter;

@@ -17,6 +17,6 @@ export class ListUncheckedCreateInput {
     @Field(() => Boolean, {nullable:true})
     done?: boolean;
 
-    @Field(() => Int, {nullable:true})
-    user_id?: number;
+    @Field(() => Int, {nullable:false})
+    user_id!: number;
 }
