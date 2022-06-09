@@ -15,15 +15,20 @@ model List {
   title     String
   deadline   String
   done Boolean @default(false)
-  user Users? @relation(fields: [user_id], references: [id])
-  user_id Int?
+  user Users @relation(fields: [user_id], references: [id])
+  user_id Int
 }
 
 model Users{
   id        Int     @default(autoincrement()) @id
+  /// @Validator.@IsEmail()
+  email       String    @unique
+  /// @Validator.IsNotEmpty()
   name String
+  /// @HideField()
+  /// @Validator.MinLength(8)
+  password    String
   list List[]
-
 }
 
  generator nestgraphql {

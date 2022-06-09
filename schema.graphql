@@ -8,6 +8,9 @@ type UsersCount {
 
 type Users {
   id: ID!
+
+  """@Validator.@IsEmail()"""
+  email: String!
   name: String!
   list: [List!]
   _count: UsersCount!
@@ -18,13 +21,19 @@ type List {
   title: String!
   deadline: String!
   done: Boolean!
-  user: Users
-  user_id: Int
+  user: Users!
+  user_id: Int!
+}
+
+type LoginResponse {
+  access_token: String!
+  users: Users!
 }
 
 type Query {
   readOne(where: ListWhereInput, orderBy: [ListOrderByWithRelationInput!], cursor: ListWhereUniqueInput, take: Int, skip: Int, distinct: [ListScalarFieldEnum!]): List!
   readAll(where: ListWhereInput, orderBy: [ListOrderByWithRelationInput!], cursor: ListWhereUniqueInput, take: Int, skip: Int, distinct: [ListScalarFieldEnum!]): [List!]!
+  findUser(where: UsersWhereUniqueInput!): Users!
 }
 
 input ListWhereInput {
@@ -36,7 +45,7 @@ input ListWhereInput {
   deadline: StringFilter
   done: BoolFilter
   user: UsersRelationFilter
-  user_id: IntNullableFilter
+  user_id: IntFilter
 }
 
 input IntFilter {
@@ -109,7 +118,9 @@ input UsersWhereInput {
   OR: [UsersWhereInput!]
   NOT: [UsersWhereInput!]
   id: IntFilter
+  email: StringFilter
   name: StringFilter
+  password: StringFilter
   list: ListListRelationFilter
 }
 
@@ -117,28 +128,6 @@ input ListListRelationFilter {
   every: ListWhereInput
   some: ListWhereInput
   none: ListWhereInput
-}
-
-input IntNullableFilter {
-  equals: Int
-  in: [Int!]
-  notIn: [Int!]
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: NestedIntNullableFilter
-}
-
-input NestedIntNullableFilter {
-  equals: Int
-  in: [Int!]
-  notIn: [Int!]
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: NestedIntNullableFilter
 }
 
 input ListOrderByWithRelationInput {
@@ -157,7 +146,9 @@ enum SortOrder {
 
 input UsersOrderByWithRelationInput {
   id: SortOrder
+  email: SortOrder
   name: SortOrder
+  password: SortOrder
   list: ListOrderByRelationAggregateInput
 }
 
@@ -177,6 +168,11 @@ enum ListScalarFieldEnum {
   user_id
 }
 
+input UsersWhereUniqueInput {
+  id: Int
+  email: String
+}
+
 type Mutation {
   createList(data: ListCreateInput!): List!
   updateList(data: ListUpdateInput!, where: ListWhereUniqueInput!): List!
@@ -184,13 +180,14 @@ type Mutation {
   createUser(data: UsersCreateInput!): Users!
   deleteUser(where: UsersWhereUniqueInput!): Users!
   updateUser(data: UsersUpdateInput!, where: UsersWhereUniqueInput!): Users!
+  login(loginUserInput: LoginUserInput!): LoginResponse!
 }
 
 input ListCreateInput {
   title: String!
   deadline: String!
   done: Boolean
-  user: UsersCreateNestedOneWithoutListInput
+  user: UsersCreateNestedOneWithoutListInput!
 }
 
 input UsersCreateNestedOneWithoutListInput {
@@ -200,7 +197,9 @@ input UsersCreateNestedOneWithoutListInput {
 }
 
 input UsersCreateWithoutListInput {
+  email: String!
   name: String!
+  password: String!
 }
 
 input UsersCreateOrConnectWithoutListInput {
@@ -208,15 +207,11 @@ input UsersCreateOrConnectWithoutListInput {
   create: UsersCreateWithoutListInput!
 }
 
-input UsersWhereUniqueInput {
-  id: Int
-}
-
 input ListUpdateInput {
   title: StringFieldUpdateOperationsInput
   deadline: StringFieldUpdateOperationsInput
   done: BoolFieldUpdateOperationsInput
-  user: UsersUpdateOneWithoutListInput
+  user: UsersUpdateOneRequiredWithoutListInput
 }
 
 input StringFieldUpdateOperationsInput {
@@ -227,12 +222,10 @@ input BoolFieldUpdateOperationsInput {
   set: Boolean
 }
 
-input UsersUpdateOneWithoutListInput {
+input UsersUpdateOneRequiredWithoutListInput {
   create: UsersCreateWithoutListInput
   connectOrCreate: UsersCreateOrConnectWithoutListInput
   upsert: UsersUpsertWithoutListInput
-  disconnect: Boolean
-  delete: Boolean
   connect: UsersWhereUniqueInput
   update: UsersUpdateWithoutListInput
 }
@@ -243,11 +236,15 @@ input UsersUpsertWithoutListInput {
 }
 
 input UsersUpdateWithoutListInput {
+  email: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
+  password: StringFieldUpdateOperationsInput
 }
 
 input UsersCreateInput {
+  email: String!
   name: String!
+  password: String!
   list: ListCreateNestedManyWithoutUserInput
 }
 
@@ -269,7 +266,9 @@ input ListCreateOrConnectWithoutUserInput {
 }
 
 input UsersUpdateInput {
+  email: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
+  password: StringFieldUpdateOperationsInput
   list: ListUpdateManyWithoutUserInput
 }
 
@@ -316,11 +315,16 @@ input ListScalarWhereInput {
   title: StringFilter
   deadline: StringFilter
   done: BoolFilter
-  user_id: IntNullableFilter
+  user_id: IntFilter
 }
 
 input ListUpdateManyMutationInput {
   title: StringFieldUpdateOperationsInput
   deadline: StringFieldUpdateOperationsInput
   done: BoolFieldUpdateOperationsInput
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
 }

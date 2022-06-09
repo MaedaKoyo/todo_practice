@@ -19,9 +19,9 @@ export class List {
     @Field(() => Boolean, {nullable:false,defaultValue:false})
     done!: boolean;
 
-    @Field(() => Users, {nullable:true})
-    user?: Users | null;
+    @Field(() => Users, {nullable:false})
+    user?: Users;
 
-    @Field(() => Int, {nullable:true})
-    user_id!: number | null;
+    @Field(() => Int, {nullable:false})
+    user_id!: number;
 }

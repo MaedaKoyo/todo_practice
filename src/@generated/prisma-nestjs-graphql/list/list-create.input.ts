@@ -14,6 +14,6 @@ export class ListCreateInput {
     @Field(() => Boolean, {nullable:true})
     done?: boolean;
 
-    @Field(() => UsersCreateNestedOneWithoutListInput, {nullable:true})
-    user?: UsersCreateNestedOneWithoutListInput;
+    @Field(() => UsersCreateNestedOneWithoutListInput, {nullable:false})
+    user!: UsersCreateNestedOneWithoutListInput;
 }

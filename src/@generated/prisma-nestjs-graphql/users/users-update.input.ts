@@ -7,7 +7,13 @@ import { ListUpdateManyWithoutUserInput } from '../list/list-update-many-without
 export class UsersUpdateInput {
 
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    email?: StringFieldUpdateOperationsInput;
+
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
     name?: StringFieldUpdateOperationsInput;
+
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    password?: StringFieldUpdateOperationsInput;
 
     @Field(() => ListUpdateManyWithoutUserInput, {nullable:true})
     list?: ListUpdateManyWithoutUserInput;
