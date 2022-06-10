@@ -1,4 +1,4 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from 'src/users/users.service';
 import { Users } from 'src/@generated/prisma-nestjs-graphql/users/users.model'
@@ -8,6 +8,7 @@ import {UpdateOneUsersArgs} from 'src/@generated/prisma-nestjs-graphql/users/upd
 import {FindUniqueUsersArgs} from 'src/@generated/prisma-nestjs-graphql/users/find-unique-users.args'
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { PubSub } from 'graphql-subscriptions';
 
 
 @Resolver(() => Users)
@@ -48,5 +49,6 @@ export class UsersResolver {
     ){
         return this.userService.findUser(args);
     }
+
 
 }
