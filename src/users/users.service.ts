@@ -5,14 +5,24 @@ import { CreateOneUsersArgs } from 'src/@generated/prisma-nestjs-graphql/users/c
 import {DeleteOneUsersArgs} from 'src/@generated/prisma-nestjs-graphql/users/delete-one-users.args';
 import {UpdateOneUsersArgs} from 'src/@generated/prisma-nestjs-graphql/users/update-one-users.args';
 import {FindUniqueUsersArgs} from 'src/@generated/prisma-nestjs-graphql/users/find-unique-users.args'
+import { Subscription } from '@nestjs/graphql';
+import { PubSub } from 'graphql-subscriptions';
 
+const pubsub = new PubSub();
 @Injectable()
 export class UsersService {
     constructor(private readonly prisma: PrismaService) {}
 
-    //careate  user
+    //create user subscription
+    @Subscription(() => Users, {name: 'userAdded'})
+    async userAdded() {
+        return pubsub.asyncIterator('userAdded');
+    }
+    //create user
     async createUser(args: CreateOneUsersArgs): Promise<Users | null> {
-        return this.prisma.users.create(args);
+        const newUser = this.prisma.users.create(args);
+        pubsub.publish('userAdded', { userAdded: newUser });
+        return  newUser;
     }
 
     //delete user

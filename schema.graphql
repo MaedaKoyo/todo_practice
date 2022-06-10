@@ -328,3 +328,8 @@ input LoginUserInput {
   email: String!
   password: String!
 }
+
+type Subscription {
+  listAdded: List!
+  userAdded: Users!
+}
